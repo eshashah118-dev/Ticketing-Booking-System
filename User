@@ -1,0 +1,37 @@
+package ticketbooking;
+import java.util.*;
+
+public class User {
+    private String username;
+    private String password;
+    private List<Ticket> myTickets = new ArrayList<>();
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public void addTicket(Ticket ticket) {
+        myTickets.add(ticket);
+    }
+
+    public void viewTickets() {
+        if (myTickets.isEmpty()) {
+            System.out.println("No tickets booked.");
+        } else {
+            System.out.println("Your Tickets:");
+            for (Ticket t : myTickets) {
+                System.out.println(t);
+            }
+        }
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String toString() {
+        return username;
+    }
+}
