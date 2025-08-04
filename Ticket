@@ -1,0 +1,19 @@
+package ticketbooking;
+
+public class Ticket {
+    private static int count = 1;
+    private int ticketId;
+    private String username;
+    private String eventName;
+
+    public Ticket(User user, Event event) {
+        this.ticketId = count++;
+        this.username = user.toString();
+        this.eventName = event.getName();
+    }
+
+    @Override
+    public String toString() {
+        return "Ticket ID: " + ticketId + " | Event: " + eventName;
+    }
+}
