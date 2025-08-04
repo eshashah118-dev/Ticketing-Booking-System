@@ -1,0 +1,34 @@
+package ticketbooking;
+import java.util.*;
+
+public class BookingSystem {
+    private static Scanner sc = new Scanner(System.in);
+    private static AccountManager accManager = new AccountManager();
+    private static List<Event> events = new ArrayList<>();
+
+    static {
+        events.add(new Event("Concert A", 50));
+        events.add(new Event("Movie B", 30));
+        events.add(new Event("Festival C", 100));
+    }
+
+    public static void start() {
+        System.out.println("==== Welcome to Ticket Booking System ====");
+        while (true) {
+            System.out.println("\n1. Create Account\n2. Login\n3. Exit");
+            System.out.print("Choose: ");
+            int choice = sc.nextInt();
+            sc.nextLine();
+
+            switch (choice) {
+                case 1 -> accManager.createAccount();
+                case 2 -> accManager.login(events);
+                case 3 -> {
+                    System.out.println("Exiting...");
+                    return;
+                }
+                default -> System.out.println("Invalid option.");
+            }
+        }
+    }
+}
