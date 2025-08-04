@@ -1,0 +1,68 @@
+package ticketbooking;
+import java.util.*;
+
+public class AccountManager {
+    private Map<String, User> users = new HashMap<>();
+
+    public void createAccount() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter username: ");
+        String uname = sc.nextLine();
+        System.out.print("Enter password: ");
+        String pass = sc.nextLine();
+
+        if (users.containsKey(uname)) {
+            System.out.println("Username already exists!");
+        } else {
+            users.put(uname, new User(uname, pass));
+            System.out.println("Account created!");
+        }
+    }
+
+    public void login(List<Event> events) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Username: ");
+        String uname = sc.nextLine();
+        System.out.print("Password: ");
+        String pass = sc.nextLine();
+
+        if (users.containsKey(uname) && users.get(uname).getPassword().equals(pass)) {
+            System.out.println("Login successful!");
+            userMenu(users.get(uname), events);
+        } else {
+            System.out.println("Invalid credentials.");
+        }
+    }
+
+    private void userMenu(User user, List<Event> events) {
+        Scanner sc = new Scanner(System.in);
+        while (true) {
+            System.out.println("\n1. Book Ticket\n2. View My Tickets\n3. Logout");
+            System.out.print("Choose: ");
+            int ch = sc.nextInt();
+            sc.nextLine();
+
+            switch (ch) {
+                case 1 -> {
+                    for (int i = 0; i < events.size(); i++) {
+                        System.out.println((i + 1) + ". " + events.get(i));
+                    }
+                    System.out.print("Choose event: ");
+                    int idx = sc.nextInt() - 1;
+                    if (idx >= 0 && idx < events.size()) {
+                        Ticket ticket = new Ticket(user, events.get(idx));
+                        user.addTicket(ticket);
+                        System.out.println("Ticket booked!");
+                    } else {
+                        System.out.println("Invalid choice.");
+                    }
+                }
+                case 2 -> user.viewTickets();
+                case 3 -> {
+                    return;
+                }
+                default -> System.out.println("Invalid option.");
+            }
+        }
+    }
+}
